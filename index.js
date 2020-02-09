@@ -12,8 +12,11 @@ const queryHandler = (req, res, next) => {
   }).catch(next)
 }
 
+app.use(express.static(__dirname + '/views'));
+
 app.get('/', (req, res) => {
-  res.send('Welcome to EQ Works 😎')
+  // res.send('Welcome to EQ Works 😎')
+  res.render(index)
 })
 
 app.get('/events/hourly', (req, res, next) => {
