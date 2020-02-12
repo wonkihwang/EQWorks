@@ -54,8 +54,8 @@ app.get('/events/hourly', (req, res, next) => {
     })
 
   })
-//   return next()
-// }, queryHandler)
+  //   return next()
+  // }, queryHandler)
 })
 
 app.get('/events/daily', (req, res, next) => {
@@ -87,8 +87,8 @@ app.get('/events/daily', (req, res, next) => {
     })
 
   })
-//   return next()
-// }, queryHandler)
+  //   return next()
+  // }, queryHandler)
 })
 
 app.get('/stats/hourly', (req, res, next) => {
@@ -119,8 +119,8 @@ app.get('/stats/hourly', (req, res, next) => {
     })
 
   })
-//   return next()
-// }, queryHandler)
+  //   return next()
+  // }, queryHandler)
 })
 
 app.get('/stats/daily', (req, res, next) => {
