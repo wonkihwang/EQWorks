@@ -1,5 +1,6 @@
 const express = require('express')
 const pg = require('pg')
+const rateLimiter = require('./rate-limiter');
 
 const app = express()
 // configs come from standard PostgreSQL env vars
@@ -44,7 +45,6 @@ app.get('/events/hourly', (req, res, next) => {
 
       var hourlyEventsList = result.rows;
 
-      // res.send(poiList);
       res.render('datatable', {
         'title': 'HOURLY EVENTS',
         'numofcol': Object.keys(hourlyEventsList[0]).length,
@@ -77,7 +77,6 @@ app.get('/events/daily', (req, res, next) => {
 
       var dailyEventsList = result.rows;
 
-      // res.send(poiList);
       res.render('datatable', {
         'title': 'DAILY EVENTS',
         'numofcol': Object.keys(dailyEventsList[0]).length,
@@ -109,7 +108,6 @@ app.get('/stats/hourly', (req, res, next) => {
 
       var hourlyStatsList = result.rows;
 
-      // res.send(poiList);
       res.render('datatable', {
         'title': 'HOURLY STATUS',
         'numofcol': Object.keys(hourlyStatsList[0]).length,
@@ -145,7 +143,6 @@ app.get('/stats/daily', (req, res, next) => {
 
       var dailyStatsList = result.rows;
 
-      // res.send(poiList);
       res.render('datatable', {
         'title': 'DAILY STATUS',
         'numofcol': Object.keys(dailyStatsList[0]).length,
@@ -175,7 +172,6 @@ app.get('/poi', (req, res, next) => {
 
       var poiList = result.rows;
 
-      // res.send(poiList);
       res.render('datatable', {
         'title': 'POI',
         'numofcol': Object.keys(poiList[0]).length,
@@ -188,6 +184,39 @@ app.get('/poi', (req, res, next) => {
   // return next()
   // }, queryHandler)
 })
+
+app.get('/events', (req, res, next) => {
+  req.sqlQuery = `
+    SELECT date, SUM(events) AS events
+    FROM public.hourly_events
+    GROUP BY date
+    ORDER BY date
+    LIMIT 7;
+    `
+
+  pool.connect(function (err, client, done) {
+    if (err) {
+      console.log("Fail to connect: " + err);
+    }
+
+    client.query(req.sqlQuery, function (err, result) {
+      if (err) throw err;
+
+      var eventList = result.rows;
+
+      res.render('events', {
+        'datalist': eventList
+      });
+    })
+
+  })
+})
+
+app.get('/geo', (req, res, next) => {
+  res.render('geo');
+})
+
+app.use(rateLimiter);
 
 app.listen(process.env.PORT || 5555, (err) => {
   if (err) {

@@ -1,0 +1,36 @@
+<div class="container p-4">
+    <div class="row">
+        <div class="col-md-12">
+            <div id="chart_div"></div>
+        </div>
+    </div>
+</div>
+
+<script type='text/javascript' src='https://www.gstatic.com/charts/loader.js'></script>
+<script type='text/javascript'>
+    google.charts.load('current', {
+        'packages': ['geochart'],
+        'mapsApiKey': 'AIzaSyCT85rzq368yT_vXyezCzm9pgMwxFWxMJk'
+    });
+    google.charts.setOnLoadCallback(drawMarkersMap);
+
+    function drawMarkersMap() {
+        var data = google.visualization.arrayToDataTable([
+            ['Lat', 'Long', 'Name'],
+            [43.6708, -79.3899, 'EQ Works'],
+            [43.6426, -79.3871, 'CN Tower'],
+            [43.0896, -79.0849, 'Niagara Falls'],
+            [49.2965, -123.0884, 'Vancouver Harbour']
+        ]);
+
+        var options = {
+            sizeAxis: { minValue: 0, maxValue: 100 },
+            region: 'CA',
+            displayMode: 'markers',
+            colorAxis: { colors: ['#e7711c', '#4374e0'] }
+        };
+
+        var chart = new google.visualization.GeoChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+    };
+</script>

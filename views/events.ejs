@@ -1,0 +1,60 @@
+<div class="container p-4">
+    <div class="row">
+        <div class="col-md-12">
+            <div id="events_chart_div"></div>
+        </div>
+    </div>
+</div>
+<div id="datalist" class="d-none"><%= JSON.stringify(datalist) %></div>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script>
+    var data = $('#datalist').text();
+    var obj = JSON.parse(data);
+
+    google.charts.load('current', { packages: ['corechart', 'bar'] });
+    google.charts.setOnLoadCallback(drawAnnotations);
+
+    function drawAnnotations() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'DATE');
+        data.addColumn('number', 'EVENTS');
+
+        for (let i = 0; i < obj.length; i++) {
+            let d = new Date(obj[i].date);
+            data.addRow([d.toDateString(), Number(obj[i].events)]);
+        }
+
+        var options = {
+            title: 'Number of Events - Daily',
+            chartArea: { width: '50%', height: '80%' },
+            annotations: {
+                alwaysOutside: true,
+                textStyle: {
+                    fontSize: 12,
+                    auraColor: 'none',
+                    color: '#555'
+                },
+                boxStyle: {
+                    stroke: '#ccc',
+                    strokeWidth: 1,
+                    gradient: {
+                        color1: '#f3e5f5',
+                        color2: '#f3e5f5',
+                        x1: '0%', y1: '0%',
+                        x2: '100%', y2: '100%'
+                    }
+                }
+            },
+            hAxis: {
+                title: 'Total Number of Events',
+                minValue: 0,
+            },
+            vAxis: {
+                title: 'Date'
+            }
+        };
+        var chart = new google.visualization.BarChart(document.getElementById('events_chart_div'));
+        chart.draw(data, options);
+    }
+</script>
