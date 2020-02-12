@@ -21,6 +21,7 @@
   "dependencies": {
     "ejs": "^3.0.1",
     "express": "^4.15.3",
+    "express-ejs-layouts": "^2.5.0",
     "pg": "^6.2.4"
   },
   "devDependencies": {

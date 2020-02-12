@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>EQ Works</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="../css/style.css">
+    <script type="text/javascript" src="../js/script.js"></script>
+</head>
+
+<body>
+    <div class="container mt-4">
+        <div class="row m-4">
+            <div class="col-md-12 text-center">
+                <a href="/" style="text-decoration:none;">
+                    <h1>EQ Works</h1>
+                </a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <span class="mx-4">
+                    <a href="/events/hourly"><button class="btn btn-primary">Events - Hourly</button></a>
+                    <a href="/events/daily"><button class="btn btn-primary">Events - Daily</button></a>
+                </span>
+                <span class="mx-4">
+                    <a href="/stats/hourly"><button class="btn btn-info">Stats - Hourly</button></a>
+                    <a href="/stats/daily"><button class="btn btn-info">Stats - Daily</button></a>
+                </span>
+                <span class="mx-4">
+                    <a href="/poi"><button class="btn btn-success">POI</button></a>
+                </span>
+            </div>
+        </div>
+
+        <hr />
+
+        <%- body %>
+
+    </div>
+</body>
+
+</html>

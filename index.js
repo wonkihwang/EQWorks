@@ -6,6 +6,8 @@ const app = express()
 // https://www.postgresql.org/docs/9.6/static/libpq-envars.html
 const pool = new pg.Pool()
 
+const expressLayouts = require('express-ejs-layouts');
+
 const queryHandler = (req, res, next) => {
   pool.query(req.sqlQuery).then((r) => {
     return res.json(r.rows || [])
@@ -14,8 +16,10 @@ const queryHandler = (req, res, next) => {
 
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
+app.set('layout', 'layout');
 
 app.use(express.static('views'));
+app.use(expressLayouts);
 
 app.get('/', (req, res) => {
   // res.send('Welcome to EQ Works 😎')
@@ -29,8 +33,30 @@ app.get('/events/hourly', (req, res, next) => {
     ORDER BY date, hour
     LIMIT 168;
   `
-  return next()
-}, queryHandler)
+
+  pool.connect(function (err, client, done) {
+    if (err) {
+      console.log("Fail to connect: " + err);
+    }
+
+    client.query(req.sqlQuery, function (err, result) {
+      if (err) throw err;
+
+      var hourlyEventsList = result.rows;
+
+      // res.send(poiList);
+      res.render('datatable', {
+        'title': 'HOURLY EVENTS',
+        'numofcol': Object.keys(hourlyEventsList[0]).length,
+        'headerlist': Object.keys(hourlyEventsList[0]),
+        'datalist': hourlyEventsList
+      });
+    })
+
+  })
+//   return next()
+// }, queryHandler)
+})
 
 app.get('/events/daily', (req, res, next) => {
   req.sqlQuery = `
@@ -40,8 +66,30 @@ app.get('/events/daily', (req, res, next) => {
     ORDER BY date
     LIMIT 7;
   `
-  return next()
-}, queryHandler)
+
+  pool.connect(function (err, client, done) {
+    if (err) {
+      console.log("Fail to connect: " + err);
+    }
+
+    client.query(req.sqlQuery, function (err, result) {
+      if (err) throw err;
+
+      var dailyEventsList = result.rows;
+
+      // res.send(poiList);
+      res.render('datatable', {
+        'title': 'DAILY EVENTS',
+        'numofcol': Object.keys(dailyEventsList[0]).length,
+        'headerlist': Object.keys(dailyEventsList[0]),
+        'datalist': dailyEventsList
+      });
+    })
+
+  })
+//   return next()
+// }, queryHandler)
+})
 
 app.get('/stats/hourly', (req, res, next) => {
   req.sqlQuery = `
@@ -50,8 +98,30 @@ app.get('/stats/hourly', (req, res, next) => {
     ORDER BY date, hour
     LIMIT 168;
   `
-  return next()
-}, queryHandler)
+
+  pool.connect(function (err, client, done) {
+    if (err) {
+      console.log("Fail to connect: " + err);
+    }
+
+    client.query(req.sqlQuery, function (err, result) {
+      if (err) throw err;
+
+      var hourlyStatsList = result.rows;
+
+      // res.send(poiList);
+      res.render('datatable', {
+        'title': 'HOURLY STATUS',
+        'numofcol': Object.keys(hourlyStatsList[0]).length,
+        'headerlist': Object.keys(hourlyStatsList[0]),
+        'datalist': hourlyStatsList
+      });
+    })
+
+  })
+//   return next()
+// }, queryHandler)
+})
 
 app.get('/stats/daily', (req, res, next) => {
   req.sqlQuery = `
@@ -64,16 +134,60 @@ app.get('/stats/daily', (req, res, next) => {
     ORDER BY date
     LIMIT 7;
   `
-  return next()
-}, queryHandler)
+
+  pool.connect(function (err, client, done) {
+    if (err) {
+      console.log("Fail to connect: " + err);
+    }
+
+    client.query(req.sqlQuery, function (err, result) {
+      if (err) throw err;
+
+      var dailyStatsList = result.rows;
+
+      // res.send(poiList);
+      res.render('datatable', {
+        'title': 'DAILY STATUS',
+        'numofcol': Object.keys(dailyStatsList[0]).length,
+        'headerlist': Object.keys(dailyStatsList[0]),
+        'datalist': dailyStatsList
+      });
+    })
+
+  })
+  //   return next()
+  // }, queryHandler)
+})
 
 app.get('/poi', (req, res, next) => {
   req.sqlQuery = `
     SELECT *
     FROM public.poi;
   `
-  return next()
-}, queryHandler)
+
+  pool.connect(function (err, client, done) {
+    if (err) {
+      console.log("Fail to connect: " + err);
+    }
+
+    client.query(req.sqlQuery, function (err, result) {
+      if (err) throw err;
+
+      var poiList = result.rows;
+
+      // res.send(poiList);
+      res.render('datatable', {
+        'title': 'POI',
+        'numofcol': Object.keys(poiList[0]).length,
+        'headerlist': Object.keys(poiList[0]),
+        'datalist': poiList
+      });
+    })
+
+  })
+  // return next()
+  // }, queryHandler)
+})
 
 app.listen(process.env.PORT || 5555, (err) => {
   if (err) {

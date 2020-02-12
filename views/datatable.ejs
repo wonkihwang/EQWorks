@@ -1,0 +1,59 @@
+<div class="container p-4">
+    <div class="row">
+        <div class="col-md-12">
+            <h4><span class="text-danger"><%= title %></span> DATA TABLE</h4>
+        </div>
+    </div>
+    <br />
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group row">
+                <div class="col-sm-12">
+                    <input type="text" class="form-control" id="searchInput" placeholder="Type Here to Search">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <% if (datalist != null) { %>
+            <table class="table" id="dataTable">
+                <thead>
+                    <tr class="text-uppercase">
+                        <% for(let i = 0; i < numofcol; i++) { %>
+                        <th><%= headerlist[i] %></th>
+                        <% } %>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <% if (title == 'POI') { %>
+                    <% datalist.forEach(function(data) { %>
+                    <tr>
+                        <% for(let j = 0; j < numofcol; j++) { %>
+                        <td><%= data[headerlist[j]] %></td>
+                        <% } %>
+                    </tr>
+                    <% }) %>
+                    <% } else { %>
+                    <% datalist.forEach(function(data) { %>
+                    <tr>
+                        <td><%= data[headerlist[0]].toDateString() %></td>
+                        <% for(let j = 1; j < numofcol; j++) { %>
+                        <% if (headerlist[j] == 'revenue') { %>
+                        <td><%= '$ ' + parseFloat(data[headerlist[j]]).toFixed(2) %></td>
+                        <% } else { %>
+                        <td><%= data[headerlist[j]] %></td>
+                        <% } %>
+                        <% } %>
+                    </tr>
+                    <% }) %>
+                    <% } %>
+                </tbody>
+            </table>
+            <% } %>
+        </div>
+    </div>
+</div>
