@@ -185,7 +185,33 @@ app.get('/poi', (req, res, next) => {
   // }, queryHandler)
 })
 
-app.get('/events', (req, res, next) => {
+app.get('/chart/hourly', (req, res, next) => {
+  req.sqlQuery = `
+    SELECT date, hour, events
+    FROM public.hourly_events
+    ORDER BY date, hour
+    LIMIT 168;
+  `
+
+  pool.connect(function (err, client, done) {
+    if (err) {
+      console.log("Fail to connect: " + err);
+    }
+
+    client.query(req.sqlQuery, function (err, result) {
+      if (err) throw err;
+
+      var eventList = result.rows;
+
+      res.render('events', {
+        'datatype': "hourly",
+        'datalist': eventList
+      });
+    })
+  })
+})
+
+app.get('/chart/daily', (req, res, next) => {
   req.sqlQuery = `
     SELECT date, SUM(events) AS events
     FROM public.hourly_events
@@ -205,15 +231,35 @@ app.get('/events', (req, res, next) => {
       var eventList = result.rows;
 
       res.render('events', {
+        'datatype': "daily",
         'datalist': eventList
       });
     })
-
   })
 })
 
 app.get('/geo', (req, res, next) => {
-  res.render('geo');
+  req.sqlQuery = `
+    SELECT poi.poi_id, poi.name, poi.lat, poi.lon, hourly_events.date, hourly_events.hour, hourly_events.events
+    FROM poi
+    INNER JOIN hourly_events
+    ON poi.poi_id = hourly_events.poi_id
+    ORDER BY poi.poi_id;
+    `
+
+  pool.connect(function (err, client, done) {
+    if (err) {
+      console.log("Fail to connect: " + err);
+    }
+
+    client.query(req.sqlQuery, function (err, result) {
+      if (err) throw err;
+
+      var dataList = result.rows;
+
+      res.render('geo', { 'datalist': dataList });
+    })
+  })
 })
 
 app.use(rateLimiter);

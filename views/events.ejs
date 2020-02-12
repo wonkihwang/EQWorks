@@ -5,10 +5,14 @@
         </div>
     </div>
 </div>
-<div id="datalist" class="d-none"><%= JSON.stringify(datalist) %></div>
+<div class="d-none">
+    <div id="datatype"><%= datatype %></div>
+    <div id="datalist"><%= JSON.stringify(datalist) %></div>
+</div>
 
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script>
+    var type = $('#datatype').text();
     var data = $('#datalist').text();
     var obj = JSON.parse(data);
 
@@ -18,16 +22,31 @@
     function drawAnnotations() {
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'DATE');
+        if (type == 'hourly') {
+            data.addColumn('number', 'HOUR');
+        }
         data.addColumn('number', 'EVENTS');
 
         for (let i = 0; i < obj.length; i++) {
             let d = new Date(obj[i].date);
-            data.addRow([d.toDateString(), Number(obj[i].events)]);
+            if (type == 'hourly') {
+                data.addRow([d.toDateString(), Number(obj[i].hour), Number(obj[i].events)]);
+            } else {
+                data.addRow([d.toDateString(), Number(obj[i].events)]);
+            }
+        }
+
+        var autoHeight = 0
+        if (type == 'hourly') {
+            autoHeight = data.getNumberOfRows() * 20;
+        } else {
+            autoHeight = data.getNumberOfRows() * 60;
         }
 
         var options = {
-            title: 'Number of Events - Daily',
-            chartArea: { width: '50%', height: '80%' },
+            title: 'Number of Events - ' + type,
+            chartArea: { 'width': '50%', 'height': '90%' },
+            height: autoHeight,
             annotations: {
                 alwaysOutside: true,
                 textStyle: {
@@ -47,7 +66,7 @@
                 }
             },
             hAxis: {
-                title: 'Total Number of Events',
+                title: 'Total Number',
                 minValue: 0,
             },
             vAxis: {
