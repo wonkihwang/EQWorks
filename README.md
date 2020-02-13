@@ -5,7 +5,7 @@ Work Sample for Product Developer, 1 and 2a - Front-end Track
 
 ### Note
 
-Implemented rate limiting(rate-limiting.js) using Redis. However, Redis does not work on Heroku (or I couldn't find the solution), so I commented the codes. Also, I am not sure it works properly on my local server.
+Implemented rate limiting(rate-limiting.js) using Redis. I made it by referring to other solutions on the internet. However, Redis does not work on Heroku (or I couldn't find the solution), so I commented the codes. Also, I get the idea but I do not understand it perfectly.
 
 ### The reason why I skipped the portion
 
