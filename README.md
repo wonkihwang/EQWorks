@@ -9,8 +9,8 @@ Implemented rate-limiting using Redis. However, Redis does not work on Heroku, s
 
 #### The reason why I skipped the portion
 
-I skipped 2a - C. client-side geo visualizations part, because 
+I skipped 2a - C. client-side geo visualizations part. I successfully added a map and put some sample data on the map. I also get the data those I want to populate and send it to the geo page. But I couldn't find the answer to combine those two. I also couldn't find out how to make selecting different metrics and ㄴseparating each metrics' intensity of different POIs.
 
-### Note about myself, and how I believe I can grow through this internship
+### About myself, and how I believe I can grow through this internship
 
-Answer Here
+I graduated from Computer Programming and Analysis program at Seneca College last year. -	During school, I worked as a coop web developer for 8 months. I've been a part of the website and internal web application project team, mainly for front-end development. I have extensive background in providing exceptional coding, problem-solving, planning, multitasking, time management as well as analytical skills. I also have artistic backgrounds such as graphic design, animation, video editing, and photography. My artistic sensibility will be a great asset to the front end implement. This job seems like a great opportunity to advance the skills I have, and continue building my career and challenging myself. I am really excited about the prospect of getting started.
