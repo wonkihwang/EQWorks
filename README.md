@@ -7,7 +7,7 @@ Work Sample for Product Developer, 1 and 2a - Front-end Track
 
 Implemented rate-limiting using Redis. However, Redis does not work on Heroku, so I commented them. Also, I am not sure it works properly on my local server.
 
-#### The reason why I skipped the portion
+### The reason why I skipped the portion
 
 I skipped 2a - C. client-side geo visualizations part. I successfully added a map and put some sample data on the map. I also get the data those I want to populate and send it to the geo page. But I couldn't find the answer to combine those two. I also couldn't find out how to make selecting different metrics and ㄴseparating each metrics' intensity of different POIs.
 
