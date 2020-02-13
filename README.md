@@ -1,32 +1,16 @@
-Work Sample for Product Aspect, Node.js Variant
+Work Sample for Product Developer, 1 and 2a - Front-end Track
 ---
 
-[What is this for?](https://github.com/EQWorks/work-samples#what-is-this)
+[Live Link (Heroku)](https://wonkihwang-eqworks.herokuapp.com/)
 
-### Setup and Run
+### Note
 
-The following are the recommended options, but you're free to use any means to get started.
+Implemented rate-limiting using Redis. However, Redis does not work on Heroku, so I commented them. Also, I am not sure it works properly on my local server.
 
-#### Remote Option: Glitch.com
+### The reason why I skipped the portion
 
-1. [![Remix on Glitch](https://cdn.glitch.com/2703baf2-b643-4da7-ab91-7ee2a2d00b5b%2Fremix-button.svg)](https://glitch.com/edit/#!/import/github/EQWorks/ws-product-nodejs)
-2. Populate `.env` file with the environment variables given in the problem set we send to you through email
-3. Click on `Show Live` and you should see `Welcome to EQ Works 😎`
+I skipped 2a - C. client-side geo visualizations part. I successfully added a map and put some sample data on the map. I also get the data those I want to populate and send it to the geo page. But I couldn't find the answer to combine those two. I also couldn't find out how to make selecting different metrics and ㄴseparating each metrics' intensity of different POIs.
 
-#### Local Option 1: Node.js 6.10+
+### About myself, and how I believe I can grow through this internship
 
-1. Clone this repository
-2. Install Node.js dependencies `$ npm install`
-3. Set environment variables given in the problem set we send to you through email and run `$ npm run dev`
-4. Open your browser and point to `localhost:5555` and you should see `Welcome to EQ Works 😎`
-
-#### Local Option 2: Docker (`docker-compose` needed)
-
-1. Clone this repository
-2. Create and populate `.env` file with the environment variables given in the problem set we send to you through email
-3. `$ docker-compose up` (or `$ docker-compose up -d` to run as a daemon)
-4. Open your browser and point to `localhost:5555` and you should see `Welcome to EQ Works 😎`
-
-### Notes on working through the problems
-
-Make sure any additional Node.js level dependencies are properly added in `package.json`. We encourage a healthy mixture of your own implementations, and good choices of existing open-source libraries/tools. We will comment in the problems to indicate which ones cannot be solved purely through an off-the-shelf solution.
+I graduated from Computer Programming and Analysis program at Seneca College last year. -	During school, I worked as a coop web developer for 8 months. I've been a part of the website and internal web application project team, mainly for front-end development. I have extensive background in providing exceptional coding, problem-solving, planning, multitasking, time management as well as analytical skills. I also have artistic backgrounds such as graphic design, animation, video editing, and photography. My artistic sensibility will be a great asset to the front end implement. This job seems like a great opportunity to advance the skills I have, and continue building my career and challenging myself. I am really excited about the prospect of getting started.
