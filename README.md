@@ -5,11 +5,11 @@ Work Sample for Product Developer, 1 and 2a - Front-end Track
 
 ### Note
 
-Implemented rate-limiting using Redis. However, Redis does not work on Heroku, so I commented them. Also, I am not sure it works properly on my local server.
+Implemented rate limiting(rate-limiting.js) using Redis. However, Redis does not work on Heroku (or I couldn't find the solution), so I commented the codes. Also, I am not sure it works properly on my local server.
 
 ### The reason why I skipped the portion
 
-I skipped 2a - C. client-side geo visualizations part. I successfully added a map and put some sample data on the map. I also get the data those I want to populate and send it to the geo page. But I couldn't find the answer to combine those two. I also couldn't find out how to make selecting different metrics and ㄴseparating each metrics' intensity of different POIs.
+I skipped 2a - C. client-side geo visualizations part. I successfully added a map and put some sample data on the map. I also get the data those I want to populate and send it to the geo page. But I couldn't find the solution to combine those two. I also couldn't find out how to make selecting different metrics and ㄴseparating each metrics' intensity of different POIs.
 
 ### About myself, and how I believe I can grow through this internship
 
