@@ -1,48 +1,50 @@
 const redis = require('redis');
-const moment = require('moment');
 const redisClient = redis.createClient();
+const moment = require('moment');
 
-module.exports = (req, res, next) => {
-    redisClient.exists(req.headers.user, (err, reply) => {
+module.exports = function (req, res, next) {
+    redisClient.exists(req.headers.user, function (err, reply) {
         if (err) {
-            console.log("problem with redis");
+            console.log("There is a problem with Redis. Error: " + err);
             system.exit(0);
         }
 
         if (reply === 1) {
-            redisClient.get(req.headers.user, (err, redisResponse) => {
-                let data = JSON.parse(redisResponse);
+            redisClient.get(req.headers.user, function (err, redisRes) {
+                let data = JSON.parse(redisRes);
 
                 let currentTime = moment().unix()
                 let lessThanMinuteAgo = moment().subtract(1, 'minute').unix();
 
-                let RequestCountPerMinutes = data.filter((item) => {
-                    return item.requestTime > lessThanMinuteAgo;
+                let RequestCountPerMinutes = data.filter(function (item) {
+                    if (item.requestTime > lessThanMinuteAgo) {
+                        return item.requestTime;
+                    }
                 })
 
                 let thresHold = 0;
 
-                RequestCountPerMinutes.forEach((item) => {
+                RequestCountPerMinutes.forEach(function (item) {
                     thresHold = thresHold + item.counter;
                 })
 
                 if (thresHold >= 5) {
-                    return res.json({ "error": 1, "message": "throttle limit exceeded" })
+                    return res.json({
+                        "error": 1,
+                        "message": "throttle limit exceeded"
+                    })
                 } else {
-                    let isFound = false;
+                    let found = false;
 
-                    data.forEach(element => {
-                        if (element.requestTime) {
-                            isFound = true;
-                            element.counter++;
+                    data.forEach(function (elem) {
+                        if (elem.requestTime) {
+                            found = true;
+                            elem.counter++;
                         }
                     });
 
-                    if (!isFound) {
-                        data.push({
-                            requestTime: currentTime,
-                            counter: 1
-                        })
+                    if (!found) {
+                        data.push({ requestTime: currentTime, counter: 1 })
                     }
 
                     redisClient.set(req.headers.user, JSON.stringify(data));
@@ -55,6 +57,7 @@ module.exports = (req, res, next) => {
                 'requestTime': moment().unix(),
                 'counter': 1
             }
+
             data.push(requestData);
             redisClient.set(req.headers.user, JSON.stringify(data));
             next();
