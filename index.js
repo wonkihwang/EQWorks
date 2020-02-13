@@ -1,12 +1,24 @@
 const express = require('express')
 const pg = require('pg')
+
+// Tried to run rate-limiter.js using Redis, but couldn't run Redis on heroku
 // const rateLimiter = require('./rate-limiter');
 
 const app = express()
 // configs come from standard PostgreSQL env vars
 // https://www.postgresql.org/docs/9.6/static/libpq-envars.html
-const pool = new pg.Pool()
+// const pool = new pg.Pool()
 
+// Added Postgres environment variables for connectivity into index.js to run the app on heroku
+const pool = new pg.Pool({
+  user: 'readonly',
+  host: 'work-samples-db.cx4wctygygyq.us-east-1.rds.amazonaws.com',
+  database: 'work_samples',
+  password: 'w2UIO@#bg532!',
+  port: 5432,
+})
+
+// Used EJS to populate data on the pages
 const expressLayouts = require('express-ejs-layouts');
 
 const queryHandler = (req, res, next) => {
