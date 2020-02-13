@@ -1,6 +1,6 @@
 const express = require('express')
 const pg = require('pg')
-const rateLimiter = require('./rate-limiter');
+// const rateLimiter = require('./rate-limiter');
 
 const app = express()
 // configs come from standard PostgreSQL env vars
@@ -262,7 +262,7 @@ app.get('/geo', (req, res, next) => {
   })
 })
 
-app.use(rateLimiter);
+// app.use(rateLimiter);
 
 app.listen(process.env.PORT || 5555, (err) => {
   if (err) {
